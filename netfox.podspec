@@ -18,7 +18,7 @@ DESC
 
   s.requires_arc = true
 
-  s.source_files = "netfox/*.swift"
+  s.source_files = "netfox/Core/*.swift"
   s.ios.source_files = "netfox/iOS/*.swift"
-  s.osx.source_files = "netfox/OS X/*.swift"  
+  s.osx.source_files = "netfox/OSX/*.{swift,xib}"  
 end
