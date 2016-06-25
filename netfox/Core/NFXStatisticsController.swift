@@ -22,7 +22,7 @@ class NFXStatisticsController: NFXGenericController
     var fastestResponseTime: Float = 999
     var slowestResponseTime: Float = 0
     
-    func getReportString() -> NSAttributedString
+    func getReportString() -> AttributedString
     {
         var tempString: String
         tempString = String()

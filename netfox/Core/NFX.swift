@@ -51,7 +51,7 @@ public class NFX: NSObject
     private var selectedGesture: ENFXGesture = .shake
     private var ignoredURLs = [String]()
     private var filters = [Bool]()
-    private var lastVisitDate: NSDate = NSDate()
+    private var lastVisitDate: Date = Date()
 
     @objc public func start()
     {
@@ -77,7 +77,7 @@ public class NFX: NSObject
         #endif
     }
     
-    private func showMessage(msg: String) {
+    private func showMessage(_ msg: String) {
         print("netfox \(nfxVersion) - [https://github.com/kasketis/netfox]: \(msg)")
     }
     
@@ -98,12 +98,12 @@ public class NFX: NSObject
     
     private func register()
     {
-        NSURLProtocol.registerClass(NFXProtocol)
+        URLProtocol.registerClass(NFXProtocol)
     }
     
     private func unregister()
     {
-        NSURLProtocol.unregisterClass(NFXProtocol)
+        URLProtocol.unregisterClass(NFXProtocol)
     }
     
     func motionDetected()
@@ -117,7 +117,7 @@ public class NFX: NSObject
         }
     }
     
-    @objc public func setGesture(gesture: ENFXGesture)
+    @objc public func setGesture(_ gesture: ENFXGesture)
     {
         self.selectedGesture = gesture
         #if os(OSX)
@@ -147,12 +147,12 @@ public class NFX: NSObject
         }
     }
     
-    @objc public func ignoreURL(url: String)
+    @objc public func ignoreURL(_ url: String)
     {
         self.ignoredURLs.append(url)
     }
     
-    internal func getLastVisitDate() -> NSDate
+    internal func getLastVisitDate() -> Date
     {
         return self.lastVisitDate
     }
@@ -174,10 +174,10 @@ public class NFX: NSObject
             return
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("NFXDeactivateSearch", object: nil)
+        NotificationCenter.default().post(name: Notification.Name(rawValue: "NFXDeactivateSearch"), object: nil)
         self.hideNFXFollowingPlatform { () -> Void in
             self.presented = false
-            self.lastVisitDate = NSDate()
+            self.lastVisitDate = Date()
         }
     }
     
@@ -185,11 +185,11 @@ public class NFX: NSObject
     {
         NFXHTTPModelManager.sharedInstance.clear()
         do {
-            let documentsPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first!
-            let filePathsArray = try NSFileManager.defaultManager().subpathsOfDirectoryAtPath(documentsPath)
+            let documentsPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first!
+            let filePathsArray = try FileManager.default().subpathsOfDirectory(atPath: documentsPath)
             for filePath in filePathsArray {
                 if filePath.hasPrefix("nfx") {
-                    try NSFileManager.defaultManager().removeItemAtPath((documentsPath as NSString).stringByAppendingPathComponent(filePath))
+                    try FileManager.default().removeItem(atPath: (documentsPath as NSString).appendingPathComponent(filePath))
                 }
             }
             
@@ -206,7 +206,7 @@ public class NFX: NSObject
         return self.selectedGesture
     }
     
-    func cacheFilters(selectedFilters: [Bool])
+    func cacheFilters(_ selectedFilters: [Bool])
     {
         self.filters = selectedFilters
     }
@@ -214,7 +214,7 @@ public class NFX: NSObject
     func getCachedFilters() -> [Bool]
     {
         if self.filters.count == 0 {
-            self.filters = [Bool](count: HTTPModelShortType.allValues.count, repeatedValue: true)
+            self.filters = [Bool](repeating: true, count: HTTPModelShortType.allValues.count)
         }
         return self.filters
     }
@@ -233,17 +233,17 @@ extension NFX {
         listController = NFXListController_iOS()
         
         navigationController = UINavigationController(rootViewController: listController)
-        navigationController!.navigationBar.translucent = false
+        navigationController!.navigationBar.isTranslucent = false
         navigationController!.navigationBar.tintColor = UIColor.NFXOrangeColor()
         navigationController!.navigationBar.barTintColor = UIColor.NFXStarkWhiteColor()
         navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.NFXOrangeColor()]
         
-        presentingViewController?.presentViewController(navigationController!, animated: true, completion: nil)
+        presentingViewController?.present(navigationController!, animated: true, completion: nil)
     }
     
-    private func hideNFXFollowingPlatform(completion: (() -> Void)?)
+    private func hideNFXFollowingPlatform(_ completion: (() -> Void)?)
     {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             if let notNilCompletion = completion {
                 notNilCompletion()
             }
@@ -252,7 +252,7 @@ extension NFX {
     
     private var presentingViewController: UIViewController?
         {
-            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared().keyWindow?.rootViewController
             return rootViewController?.presentedViewController ?? rootViewController
     }
     
