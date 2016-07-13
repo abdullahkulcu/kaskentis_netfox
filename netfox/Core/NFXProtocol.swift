@@ -65,7 +65,7 @@ public class NFXProtocol: URLProtocol
         URLProtocol.setProperty("1", forKey: "NFXInternal", in: req)
         
         if (session == nil) {
-            session = URLSession(configuration: URLSessionConfiguration.default())
+            session = URLSession(configuration: URLSessionConfiguration.default)
         }
 
         session!.dataTask(with: req as URLRequest, completionHandler: {data, response, error in
@@ -117,7 +117,7 @@ public class NFXProtocol: URLProtocol
             NFXHTTPModelManager.sharedInstance.add(self.model!)
         }
         
-        NotificationCenter.default().post(name: Notification.Name(rawValue: "NFXReloadData"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "NFXReloadData"), object: nil)
     }
     
 }

@@ -40,10 +40,10 @@ class NFXStatisticsController_iOS: NFXStatisticsController {
         
         self.scrollView.contentSize = CGSize(width: scrollView.frame.width, height: self.textLabel.frame.maxY)
         
-        NotificationCenter.default().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(NFXGenericController.reloadData),
-            name: "NFXReloadData",
+            name: "NFXReloadData" as NSNotification.Name,
             object: nil)
         
     }

@@ -35,7 +35,7 @@ class NFXListController_iOS: NFXListController, UITableViewDelegate, UITableView
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-        self.tableView.register(NFXListCell.self, forCellReuseIdentifier: NSStringFromClass(NFXListCell))
+        self.tableView.register(NFXListCell.self, forCellReuseIdentifier: NSStringFromClass(NFXListCell.self))
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage.NFXSettings(), style: .plain, target: self, action: #selector(NFXListController_iOS.settingsButtonPressed))
 
@@ -60,16 +60,16 @@ class NFXListController_iOS: NFXListController, UITableViewDelegate, UITableView
         
         self.navigationItem.titleView = searchView
         
-        NotificationCenter.default().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(NFXListController.reloadTableViewData),
-            name: "NFXReloadData",
+            name: "NFXReloadData" as NSNotification.Name,
             object: nil)
         
-        NotificationCenter.default().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(NFXListController_iOS.deactivateSearchController),
-            name: "NFXDeactivateSearch",
+            name: "NFXDeactivateSearch" as NSNotification.Name,
             object: nil)        
     }
     
@@ -111,7 +111,7 @@ class NFXListController_iOS: NFXListController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(NFXListCell), for: indexPath) as! NFXListCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(NFXListCell.self), for: indexPath) as! NFXListCell
         
         if (self.searchController.isActive) {
             if self.filteredTableData.count > 0 {

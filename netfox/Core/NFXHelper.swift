@@ -232,22 +232,22 @@ class NFXDebugInfo {
     
     class func getNFXAppName() -> String
     {
-        return Bundle.main().infoDictionary?["CFBundleName"] as? String ?? ""
+        return Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
     }
     
     class func getNFXAppVersionNumber() -> String
     {
-        return Bundle.main().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
     
     class func getNFXAppBuildNumber() -> String
     {
-        return Bundle.main().infoDictionary?["CFBundleVersion"] as? String ?? ""
+        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
     }
     
     class func getNFXBundleIdentifier() -> String
     {
-        return Bundle.main().bundleIdentifier ?? ""
+        return Bundle.main.bundleIdentifier ?? ""
     }
     
     class func getNFXOSVersion() -> String
@@ -287,7 +287,7 @@ class NFXDebugInfo {
         req = NSMutableURLRequest(url: URL(string: "https://api.ipify.org/?format=json")!)
         URLProtocol.setProperty("1", forKey: "NFXInternal", in: req)
         
-        let session = URLSession.shared()
+        let session = URLSession.shared
         session.dataTask(with: req as URLRequest) { (data, response, error) in
             do {
                 let rawJsonData = try JSONSerialization.jsonObject(with: data!, options: [.allowFragments])

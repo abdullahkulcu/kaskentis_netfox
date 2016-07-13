@@ -87,8 +87,7 @@ class NFXHTTPModel: NSObject
         var bodyString: NSString?
         
         if self.shortType == HTTPModelShortType.IMAGE.rawValue {
-            bodyString = data.base64EncodedString(.encodingEndLineWithLineFeed)
-
+            bodyString = data.base64EncodedString(options: .endLineWithLineFeed)
         } else {
             if let tempBodyString = NSString.init(data: data, encoding: String.Encoding.utf8.rawValue) {
                 bodyString = tempBodyString
@@ -181,7 +180,7 @@ class NFXHTTPModel: NSObject
     
     func getTimeFromDate(_ date: Date) -> String
     {
-        let calendar = Calendar.current()
+        let calendar = Calendar.current
         let components = calendar.components([.hour, .minute], from: date)
         let hour = components.hour
         let minutes = components.minute
