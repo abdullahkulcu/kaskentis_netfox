@@ -25,7 +25,7 @@ class NFXSettingsController_OSX: NFXSettingsController, NSTableViewDataSource, N
         
         nfxVersionLabel.stringValue = nfxVersionString
         nfxURLButton.title = nfxURL
-        responseTypesTableView.registerNib(NSNib(nibNamed: cellIdentifier, bundle: nil), forIdentifier: cellIdentifier)
+        responseTypesTableView.register(NSNib(nibNamed: cellIdentifier, bundle: nil), forIdentifier: cellIdentifier)
         
         reloadTableData()
     }
@@ -47,33 +47,33 @@ class NFXSettingsController_OSX: NFXSettingsController, NSTableViewDataSource, N
     
     @IBAction func clearDataClicked(sender: AnyObject?) {
         NFX.sharedInstance().clearOldData()
-        NSNotificationCenter.defaultCenter().postNotificationName("NFXReloadData", object: nil)
+        NotificationCenter.default.post(name: "NFXReloadData" as NSNotification.Name, object: nil)
     }
     
     @IBAction func nfxURLButtonClicked(sender: NSButton) {
-        NSWorkspace.sharedWorkspace().openURL(NSURL(string: nfxURL)!)
+        NSWorkspace.shared().open(NSURL(string: nfxURL)! as URL)
     }
     
     @IBAction func toggleResponseTypeClicked(sender: NSButton) {
         filters[sender.tag] = !filters[sender.tag]
         NFX.sharedInstance().cacheFilters(filters)
-        NSNotificationCenter.defaultCenter().postNotificationName("NFXReloadData", object: nil)
+        NotificationCenter.default.post(name: "NFXReloadData" as NSNotification.Name, object: nil)
     }
     
     func reloadTableData() {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async {
             self.responseTypesTableView.reloadData()
         }
     }
     
     // MARK: Table View Delegate and DataSource
     
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    private func numberOfRowsInTableView(tableView: NSTableView) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let cell = tableView.makeViewWithIdentifier(cellIdentifier, owner: nil) as? NFXResponseTypeCell_OSX else {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NFXResponseTypeCell_OSX else {
             return nil
         }
         
@@ -82,11 +82,11 @@ class NFXSettingsController_OSX: NFXSettingsController, NSTableViewDataSource, N
         cell.activeCheckbox.state = filters[row] ? NSOnState : NSOffState
         cell.activeCheckbox.tag = row
         cell.activeCheckbox.target = self
-        cell.activeCheckbox.action = #selector(NFXSettingsController_OSX.toggleResponseTypeClicked(_:))
+        cell.activeCheckbox.action = #selector(NFXSettingsController_OSX.toggleResponseTypeClicked(sender:))
         return cell
     }
     
-    func tableView(tableView: NSTableView, shouldSelectRow: Int) -> Bool {
+    func tableView(_ tableView: NSTableView, shouldSelectRow: Int) -> Bool {
         return false
     }
     

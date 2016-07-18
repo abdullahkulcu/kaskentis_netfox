@@ -21,12 +21,12 @@ class NFXDetailsController_OSX: NFXDetailsController {
         super.viewDidLoad()
     }
     
-    override func selectedModel(model: NFXHTTPModel) {
+    override func selectedModel(_ model: NFXHTTPModel) {
         super.selectedModel(model)
         self.textViewInfo.textStorage?.setAttributedString(self.getInfoStringFromObject(model))
         self.textViewRequest.textStorage?.setAttributedString(self.getRequestStringFromObject(model))
 
-        let bodyRequest: NSAttributedString
+        let bodyRequest: AttributedString
         if model.requestBodyLength == 0 {
             bodyRequest = self.formatNFXString(String(self.getRequestBodyStringFooter(model)))
         } else {
@@ -35,7 +35,7 @@ class NFXDetailsController_OSX: NFXDetailsController {
         self.textViewBodyRequest.textStorage?.setAttributedString(bodyRequest)
         
         self.textViewResponse.textStorage?.setAttributedString(self.getResponseStringFromObject(model))
-        let bodyResponse: NSAttributedString
+        let bodyResponse: AttributedString
         if model.responseBodyLength == 0 {
             bodyResponse = self.formatNFXString(String(self.getResponseBodyStringFooter(model)))
         } else {

@@ -24,18 +24,18 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
     // MARK: View Life Cycle
 
     override func awakeFromNib() {
-        tableView.registerNib(NSNib(nibNamed: cellIdentifier, bundle: nil), forIdentifier: cellIdentifier)
+        tableView.register(NSNib(nibNamed: cellIdentifier, bundle: nil), forIdentifier: cellIdentifier)
         searchField.delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NFXListController.reloadTableViewData), name: "NFXReloadData", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NFXListController_OSX.deactivateSearchController), name: "NFXDeactivateSearch", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NFXListController.reloadTableViewData), name: "NFXReloadData" as NSNotification.Name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NFXListController_OSX.deactivateSearchController), name: "NFXDeactivateSearch" as NSNotification.Name, object: nil)
     }
     
     // MARK: Notifications
 
     override func reloadTableViewData()
     {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
@@ -53,7 +53,7 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
         reloadTableViewData()
     }
 
-    override func controlTextDidChange(obj: NSNotification) {
+    func controlTextDidChange(obj: NSNotification) {
         guard let searchField = obj.object as? NSSearchField else {
             return
         }
@@ -64,7 +64,7 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
     
     // MARK: UITableViewDataSource
     
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    private func numberOfRowsInTableView(tableView: NSTableView) -> Int {
         if (self.isSearchControllerActive) {
             return self.filteredTableData.count
         } else {
@@ -72,21 +72,21 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
         }
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        guard let cell = tableView.makeViewWithIdentifier(cellIdentifier, owner: nil) as? NFXListCell_OSX else {
+        guard let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NFXListCell_OSX else {
             return nil
         }
         
         if (self.isSearchControllerActive) {
             if self.filteredTableData.count > 0 {
                 let obj = self.filteredTableData[row]
-                cell.configForObject(obj)
+                cell.configForObject(obj: obj)
             }
         } else {
             if NFXHTTPModelManager.sharedInstance.getModels().count > 0 {
                 let obj = NFXHTTPModelManager.sharedInstance.getModels()[row]
-                cell.configForObject(obj)
+                cell.configForObject(obj: obj)
             }
         }
         
@@ -95,11 +95,11 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
     
     // MARK: NSTableViewDelegate
 
-    func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         return 58
     }
 
-    func tableViewSelectionDidChange(notification: NSNotification) {
+    func tableViewSelectionDidChange(_ notification: Notification) {
         guard tableView.selectedRow >= 0 else {
             return
         }
@@ -110,7 +110,7 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
         } else {
             model = NFXHTTPModelManager.sharedInstance.getModels()[self.tableView.selectedRow]
         }
-        self.delegate?.httpModelSelectedDidChange(model)
+        self.delegate?.httpModelSelectedDidChange(model: model)
     }
     
 }

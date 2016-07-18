@@ -24,7 +24,7 @@ class NFXGenericController: NFXViewController
         self.view.backgroundColor = NFXColor.NFXGray95Color()
         #elseif os(OSX)
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NFXColor.NFXGray95Color().CGColor
+        self.view.layer?.backgroundColor = NFXColor.NFXGray95Color().cgColor
         #endif
     }
     
@@ -44,7 +44,7 @@ class NFXGenericController: NFXViewController
         let matchesBodyHeaders = regexBodyHeaders.matches(in: string, options: RegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSMakeRange(0, l)) as Array<TextCheckingResult>
         
         for match in matchesBodyHeaders {
-            tempMutableString.addAttribute(NSFontAttributeName, value: NFXFont.NFXFontBold(14), range: match.range)
+            tempMutableString.addAttribute(NSFontAttributeName, value: NFXFont.NFXFontBold(size: 14), range: match.range)
             tempMutableString.addAttribute(NSForegroundColorAttributeName, value: NFXColor.NFXOrangeColor(), range: match.range)
         }
         
