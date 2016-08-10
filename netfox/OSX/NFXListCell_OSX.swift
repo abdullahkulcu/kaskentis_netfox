@@ -27,7 +27,7 @@ class NFXListCell_OSX: NSTableCellView
     // MARK: Life cycle
         
     override func awakeFromNib() {
-        layer?.backgroundColor = NFXColor.clear().cgColor
+        layer?.backgroundColor = NFXColor.clear.cgColor
         
         self.circleView.layer?.backgroundColor = NSColor.NFXGray44Color().cgColor
         self.circleView.layer?.cornerRadius = 4
@@ -71,7 +71,7 @@ class NFXListCell_OSX: NSTableCellView
     {
         if status == 999 {
             self.statusView.layer?.backgroundColor = NFXColor.NFXGray44Color().cgColor //gray
-            self.timeIntervalLabel.textColor = NFXColor.white()
+            self.timeIntervalLabel.textColor = NFXColor.white
             
         } else if status < 400 {
             self.statusView.layer?.backgroundColor = NFXColor.NFXGreenColor().cgColor //green

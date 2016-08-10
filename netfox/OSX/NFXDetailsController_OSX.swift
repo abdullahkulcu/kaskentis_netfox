@@ -26,7 +26,7 @@ class NFXDetailsController_OSX: NFXDetailsController {
         self.textViewInfo.textStorage?.setAttributedString(self.getInfoStringFromObject(model))
         self.textViewRequest.textStorage?.setAttributedString(self.getRequestStringFromObject(model))
 
-        let bodyRequest: AttributedString
+        let bodyRequest: NSAttributedString
         if model.requestBodyLength == 0 {
             bodyRequest = self.formatNFXString(String(self.getRequestBodyStringFooter(model)))
         } else {
@@ -35,7 +35,7 @@ class NFXDetailsController_OSX: NFXDetailsController {
         self.textViewBodyRequest.textStorage?.setAttributedString(bodyRequest)
         
         self.textViewResponse.textStorage?.setAttributedString(self.getResponseStringFromObject(model))
-        let bodyResponse: AttributedString
+        let bodyResponse: NSAttributedString
         if model.responseBodyLength == 0 {
             bodyResponse = self.formatNFXString(String(self.getResponseBodyStringFooter(model)))
         } else {

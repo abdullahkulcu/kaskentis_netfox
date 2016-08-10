@@ -125,7 +125,7 @@ extension URLRequest
     func getNFXURL() -> String
     {
         if (url != nil) {
-            return url!.absoluteString!;
+            return url!.absoluteString;
         } else {
             return "-"
         }

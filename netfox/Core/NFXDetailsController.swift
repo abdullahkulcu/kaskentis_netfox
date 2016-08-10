@@ -21,7 +21,7 @@ class NFXDetailsController: NFXGenericController {
         // Do view setup here.
     }
     
-    func getInfoStringFromObject(_ object: NFXHTTPModel) -> AttributedString
+    func getInfoStringFromObject(_ object: NFXHTTPModel) -> NSAttributedString
     {
         var tempString: String
         tempString = String()
@@ -42,7 +42,7 @@ class NFXDetailsController: NFXGenericController {
         return formatNFXString(tempString)
     }
 
-    func getRequestStringFromObject(_ object: NFXHTTPModel) -> AttributedString
+    func getRequestStringFromObject(_ object: NFXHTTPModel) -> NSAttributedString
     {
         var tempString: String
         tempString = String()
@@ -75,7 +75,7 @@ class NFXDetailsController: NFXGenericController {
         return tempString
     }
     
-    func getResponseStringFromObject(_ object: NFXHTTPModel) -> AttributedString
+    func getResponseStringFromObject(_ object: NFXHTTPModel) -> NSAttributedString
     {
         if (object.noResponse) {
             return NSMutableAttributedString(string: "No response")

@@ -181,7 +181,7 @@ class NFXHTTPModel: NSObject
     func getTimeFromDate(_ date: Date) -> String
     {
         let calendar = Calendar.current
-        let components = calendar.components([.hour, .minute], from: date)
+        let components = calendar.dateComponents([.hour, .minute], from: date)
         let hour = components.hour
         let minutes = components.minute
         if minutes < 10 {

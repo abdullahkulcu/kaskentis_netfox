@@ -19,11 +19,11 @@ class NFXListController: NFXGenericController {
     
     func updateSearchResultsForSearchControllerWithString(_ searchString: String)
     {
-        let predicateURL = Predicate(format: "requestURL contains[cd] '\(searchString)'")
-        let predicateMethod = Predicate(format: "requestMethod contains[cd] '\(searchString)'")
-        let predicateType = Predicate(format: "responseType contains[cd] '\(searchString)'")
+        let predicateURL = NSPredicate(format: "requestURL contains[cd] '\(searchString)'")
+        let predicateMethod = NSPredicate(format: "requestMethod contains[cd] '\(searchString)'")
+        let predicateType = NSPredicate(format: "responseType contains[cd] '\(searchString)'")
         let predicates = [predicateURL, predicateMethod, predicateType]
-        let searchPredicate = CompoundPredicate(orPredicateWithSubpredicates: predicates)
+        let searchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         
         let array = (NFXHTTPModelManager.sharedInstance.getModels() as NSArray).filtered(using: searchPredicate)
         self.filteredTableData = array as! [NFXHTTPModel]
