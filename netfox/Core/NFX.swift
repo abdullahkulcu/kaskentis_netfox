@@ -15,7 +15,7 @@ import UIKit
 let nfxVersion = "1.7.3"
 
 @objc
-public class NFX: NSObject
+open class NFX: NSObject
 {
     #if os(OSX)
     var windowController: NFXWindowController?
@@ -34,7 +34,7 @@ public class NFX: NSObject
     }
     
     // the sharedInstance class method can be reached from ObjC
-    public class func sharedInstance() -> NFX
+    open class func sharedInstance() -> NFX
     {
         return NFX.swiftSharedInstance
     }
@@ -45,15 +45,15 @@ public class NFX: NSObject
         case custom
     }
     
-    private var started: Bool = false
-    private var presented: Bool = false
-    private var enabled: Bool = false
-    private var selectedGesture: ENFXGesture = .shake
-    private var ignoredURLs = [String]()
-    private var filters = [Bool]()
-    private var lastVisitDate: Date = Date()
+    fileprivate var started: Bool = false
+    fileprivate var presented: Bool = false
+    fileprivate var enabled: Bool = false
+    fileprivate var selectedGesture: ENFXGesture = .shake
+    fileprivate var ignoredURLs = [String]()
+    fileprivate var filters = [Bool]()
+    fileprivate var lastVisitDate: Date = Date()
 
-    @objc public func start()
+    @objc open func start()
     {
         self.started = true
         register()
@@ -65,7 +65,7 @@ public class NFX: NSObject
         #endif
     }
     
-    @objc public func stop()
+    @objc open func stop()
     {
         unregister()
         disable()
@@ -77,7 +77,7 @@ public class NFX: NSObject
         #endif
     }
     
-    private func showMessage(_ msg: String) {
+    fileprivate func showMessage(_ msg: String) {
         print("netfox \(nfxVersion) - [https://github.com/kasketis/netfox]: \(msg)")
     }
     
@@ -96,12 +96,12 @@ public class NFX: NSObject
         self.enabled = false
     }
     
-    private func register()
+    fileprivate func register()
     {
         URLProtocol.registerClass(NFXProtocol.self)
     }
     
-    private func unregister()
+    fileprivate func unregister()
     {
         URLProtocol.unregisterClass(NFXProtocol.self)
     }
@@ -117,7 +117,7 @@ public class NFX: NSObject
         }
     }
     
-    @objc public func setGesture(_ gesture: ENFXGesture)
+    @objc open func setGesture(_ gesture: ENFXGesture)
     {
         self.selectedGesture = gesture
         #if os(OSX)
@@ -129,7 +129,7 @@ public class NFX: NSObject
         #endif
     }
     
-    @objc public func show()
+    @objc open func show()
     {
         if (self.started) && (self.selectedGesture == .custom) {
             showNFX()
@@ -138,7 +138,7 @@ public class NFX: NSObject
         }
     }
     
-    @objc public func hide()
+    @objc open func hide()
     {
         if (self.started) && (self.selectedGesture == .custom) {
             hideNFX()
@@ -147,7 +147,7 @@ public class NFX: NSObject
         }
     }
     
-    @objc public func ignoreURL(_ url: String)
+    @objc open func ignoreURL(_ url: String)
     {
         self.ignoredURLs.append(url)
     }
@@ -157,7 +157,7 @@ public class NFX: NSObject
         return self.lastVisitDate
     }
     
-    private func showNFX()
+    fileprivate func showNFX()
     {
         if self.presented {
             return
@@ -168,7 +168,7 @@ public class NFX: NSObject
 
     }
     
-    private func hideNFX()
+    fileprivate func hideNFX()
     {
         if !self.presented {
             return

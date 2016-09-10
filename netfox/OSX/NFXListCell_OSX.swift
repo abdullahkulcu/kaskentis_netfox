@@ -33,11 +33,11 @@ class NFXListCell_OSX: NSTableCellView
         self.circleView.layer?.cornerRadius = 4
         self.circleView.alphaValue = 0.2
         
-        self.requestTimeLabel.font = NSFont.NFXFontBold(size: 13)
-        self.timeIntervalLabel.font = NSFont.NFXFont(size: 12)
-        self.URLLabel.font = NSFont.NFXFont(size: 12)
-        self.methodLabel.font = NSFont.NFXFont(size: 12)
-        self.typeLabel.font = NSFont.NFXFont(size: 12)
+        self.requestTimeLabel.font = NSFont.NFXFontBold(13)
+        self.timeIntervalLabel.font = NSFont.NFXFont(12)
+        self.URLLabel.font = NSFont.NFXFont(12)
+        self.methodLabel.font = NSFont.NFXFont(12)
+        self.typeLabel.font = NSFont.NFXFont(12)
         
     }
         
@@ -51,23 +51,23 @@ class NFXListCell_OSX: NSTableCellView
         self.circleView.isHidden = true
     }
     
-    func configForObject(obj: NFXHTTPModel)
+    func configForObject(_ obj: NFXHTTPModel)
     {
-        setURL(url: obj.requestURL ?? "-")
-        setStatus(status: obj.responseStatus ?? 999)
-        setTimeInterval(timeInterval: obj.timeInterval ?? 999)
-        setRequestTime(requestTime: obj.requestTime ?? "-")
-        setType(type: obj.responseType ?? "-")
-        setMethod(method: obj.requestMethod ?? "-")
-        isNewBasedOnDate(responseDate: obj.responseDate ?? NSDate())
+        setURL(obj.requestURL ?? "-")
+        setStatus(obj.responseStatus ?? 999)
+        setTimeInterval(obj.timeInterval ?? 999)
+        setRequestTime(obj.requestTime ?? "-")
+        setType(obj.responseType ?? "-")
+        setMethod(obj.requestMethod ?? "-")
+        isNewBasedOnDate(obj.responseDate ?? Date())
     }
     
-    func setURL(url: String)
+    func setURL(_ url: String)
     {
         self.URLLabel.stringValue = url
     }
     
-    func setStatus(status: Int)
+    func setStatus(_ status: Int)
     {
         if status == 999 {
             self.statusView.layer?.backgroundColor = NFXColor.NFXGray44Color().cgColor //gray
@@ -84,12 +84,12 @@ class NFXListCell_OSX: NSTableCellView
         }
     }
     
-    func setRequestTime(requestTime: String)
+    func setRequestTime(_ requestTime: String)
     {
         self.requestTimeLabel.stringValue = requestTime
     }
     
-    func setTimeInterval(timeInterval: Float)
+    func setTimeInterval(_ timeInterval: Float)
     {
         if timeInterval == 999 {
             self.timeIntervalLabel.stringValue = "-"
@@ -98,19 +98,19 @@ class NFXListCell_OSX: NSTableCellView
         }
     }
     
-    func setType(type: String)
+    func setType(_ type: String)
     {
         self.typeLabel.stringValue = type
     }
     
-    func setMethod(method: String)
+    func setMethod(_ method: String)
     {
         self.methodLabel.stringValue = method
     }
     
-    func isNewBasedOnDate(responseDate: NSDate)
+    func isNewBasedOnDate(_ responseDate: Date)
     {
-        if responseDate.isGreaterThan(NFX.sharedInstance().getLastVisitDate()) {
+        if responseDate.isGreaterThanDate(NFX.sharedInstance().getLastVisitDate()) {
             self.isNew()
         } else {
             self.isOld()

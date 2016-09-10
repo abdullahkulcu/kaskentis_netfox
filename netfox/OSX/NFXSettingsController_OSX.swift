@@ -15,7 +15,7 @@ class NFXSettingsController_OSX: NFXSettingsController, NSTableViewDataSource, N
     @IBOutlet var nfxVersionLabel: NSTextField!
     @IBOutlet var nfxURLButton: NSButton!
     
-    private let cellIdentifier = "NFXResponseTypeCell_OSX"
+    fileprivate let cellIdentifier = "NFXResponseTypeCell_OSX"
     
     // MARK: Lifecycle
     
@@ -37,7 +37,7 @@ class NFXSettingsController_OSX: NFXSettingsController, NSTableViewDataSource, N
     
     // MARK: Actions
 
-    @IBAction func loggingButtonClicked(sender: NSButton) {
+    @IBAction func loggingButtonClicked(_ sender: NSButton) {
         if sender.state == NSOnState {
             NFX.sharedInstance().enable()
         } else {
@@ -45,7 +45,7 @@ class NFXSettingsController_OSX: NFXSettingsController, NSTableViewDataSource, N
         }
     }
     
-    @IBAction func clearDataClicked(sender: AnyObject?) {
+    @IBAction func clearDataClicked(_ sender: AnyObject?) {
         NFX.sharedInstance().clearOldData()
         NotificationCenter.default.post(name: "NFXReloadData" as NSNotification.Name, object: nil)
     }

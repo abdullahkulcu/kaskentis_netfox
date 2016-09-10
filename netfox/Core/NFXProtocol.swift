@@ -8,24 +8,24 @@
 import Foundation
 
 @objc
-public class NFXProtocol: URLProtocol
+open class NFXProtocol: URLProtocol
 {
     var connection: NSURLConnection?
     var model: NFXHTTPModel?
     var session: URLSession?
     
-    override public class func canInit(with request: URLRequest) -> Bool
+    override open class func canInit(with request: URLRequest) -> Bool
     {
         return canServeRequest(request)
     }
     
-    override public class func canInit(with task: URLSessionTask) -> Bool
+    override open class func canInit(with task: URLSessionTask) -> Bool
     {
         guard let request = task.currentRequest else { return false }
         return canServeRequest(request)
     }
     
-    private class func canServeRequest(_ request: URLRequest) -> Bool
+    fileprivate class func canServeRequest(_ request: URLRequest) -> Bool
     {
         if !NFX.sharedInstance().isEnabled() {
             return false
@@ -53,7 +53,7 @@ public class NFXProtocol: URLProtocol
         return true
     }
     
-    override public func startLoading()
+    override open func startLoading()
     {
         self.model = NFXHTTPModel()
                 
@@ -101,12 +101,12 @@ public class NFXProtocol: URLProtocol
 
     }
     
-    override public func stopLoading()
+    override open func stopLoading()
     {
         
     }
     
-    override public class func canonicalRequest(for request: URLRequest) -> URLRequest
+    override open class func canonicalRequest(for request: URLRequest) -> URLRequest
     {
         return request
     }

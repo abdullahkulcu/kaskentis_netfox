@@ -12,7 +12,7 @@ private let _sharedInstance = NFXHTTPModelManager()
 final class NFXHTTPModelManager: NSObject
 {
     static let sharedInstance = NFXHTTPModelManager()
-    private var models = [NFXHTTPModel]()
+    fileprivate var models = [NFXHTTPModel]()
     
     func add(_ obj: NFXHTTPModel)
     {

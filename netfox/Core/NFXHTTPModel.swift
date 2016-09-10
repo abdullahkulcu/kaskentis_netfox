@@ -6,6 +6,17 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class NFXHTTPModel: NSObject
 {
@@ -30,7 +41,7 @@ class NFXHTTPModel: NSObject
     
     var randomHash: NSString?
     
-    var shortType: NSString = HTTPModelShortType.OTHER.rawValue
+    var shortType: NSString = HTTPModelShortType.OTHER.rawValue as NSString
     
     var noResponse: Bool = true
     
@@ -63,7 +74,7 @@ class NFXHTTPModel: NSObject
         
         if let contentType = response.getNFXHeaders()["Content-Type"] as? String {
             self.responseType = contentType.components(separatedBy: ";")[0]
-            self.shortType = getShortTypeFrom(self.responseType!).rawValue
+            self.shortType = getShortTypeFrom(self.responseType!).rawValue as NSString
         }
         
         self.timeInterval = Float(self.responseDate!.timeIntervalSince(self.requestDate!))
@@ -86,8 +97,8 @@ class NFXHTTPModel: NSObject
     {
         var bodyString: NSString?
         
-        if self.shortType == HTTPModelShortType.IMAGE.rawValue {
-            bodyString = data.base64EncodedString(options: .endLineWithLineFeed)
+        if self.shortType as String == HTTPModelShortType.IMAGE.rawValue {
+            bodyString = data.base64EncodedString(options: .endLineWithLineFeed) as NSString?
         } else {
             if let tempBodyString = NSString.init(data: data, encoding: String.Encoding.utf8.rawValue) {
                 bodyString = tempBodyString
@@ -101,12 +112,12 @@ class NFXHTTPModel: NSObject
         
     }
     
-    private func prettyOutput(_ rawData: Data, contentType: String? = nil) -> NSString
+    fileprivate func prettyOutput(_ rawData: Data, contentType: String? = nil) -> NSString
     {
         if let contentType = contentType {
             let shortType = getShortTypeFrom(contentType)
             if let output = prettyPrint(rawData, type: shortType) {
-                return output
+                return output as NSString
             }
         }
         return NSString(data: rawData, encoding: String.Encoding.utf8.rawValue) ?? ""
@@ -132,7 +143,7 @@ class NFXHTTPModel: NSObject
     func getRandomHash() -> NSString
     {
         if !(self.randomHash != nil) {
-            self.randomHash = UUID().uuidString
+            self.randomHash = UUID().uuidString as NSString?
         }
         return self.randomHash!
     }

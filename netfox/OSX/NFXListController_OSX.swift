@@ -19,7 +19,7 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
     var isSearchControllerActive: Bool = false
     var delegate: NFXWindowControllerDelegate?
     
-    private let cellIdentifier = "NFXListCell_OSX"
+    fileprivate let cellIdentifier = "NFXListCell_OSX"
     
     // MARK: View Life Cycle
 

@@ -108,12 +108,12 @@ extension NFXFont
         return UIFont(name: "HelveticaNeue-Bold", size: size)!
     }
     #elseif os(OSX)
-    class func NFXFont(size: CGFloat) -> NSFont
+    class func NFXFont(_ size: CGFloat) -> NSFont
     {
         return NSFont(name: "HelveticaNeue", size: size)!
     }
     
-    class func NFXFontBold(size: CGFloat) -> NSFont
+    class func NFXFontBold(_ size: CGFloat) -> NSFont
     {
         return NSFont(name: "HelveticaNeue-Bold", size: size)!
     }
@@ -180,9 +180,9 @@ extension URLResponse
         return (self as? HTTPURLResponse)?.statusCode ?? 999
     }
     
-    func getNFXHeaders() -> Dictionary<NSObject, AnyObject>
+    public func getNFXHeaders() -> Dictionary<NSObject, AnyObject>
     {
-        return (self as? HTTPURLResponse)?.allHeaderFields ?? Dictionary()
+        return (self as? HTTPURLResponse)?.allHeaderFields as [NSObject : AnyObject]? ?? Dictionary()
     }
 }
 
@@ -281,7 +281,7 @@ class NFXDebugInfo {
         #endif
     }
     
-    class func getNFXIP(_ completion:(result: String) -> Void)
+    class func getNFXIP(_ completion:@escaping (_ result: String) -> Void)
     {
         var req: NSMutableURLRequest
         req = NSMutableURLRequest(url: URL(string: "https://api.ipify.org/?format=json")!)
@@ -291,13 +291,13 @@ class NFXDebugInfo {
         session.dataTask(with: req as URLRequest) { (data, response, error) in
             do {
                 let rawJsonData = try JSONSerialization.jsonObject(with: data!, options: [.allowFragments])
-                if let ipAddress = rawJsonData.value(forKey: "ip") {
-                    completion(result: ipAddress as! String)
+                if let ipAddress = (rawJsonData as AnyObject).value(forKey: "ip") {
+                    completion(ipAddress as! String)
                 } else {
-                    completion(result: "-")
+                    completion("-")
                 }
             } catch {
-                completion(result: "-")
+                completion("-")
             }
             
             }.resume()
