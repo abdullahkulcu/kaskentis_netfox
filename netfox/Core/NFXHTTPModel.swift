@@ -34,7 +34,7 @@ class NFXHTTPModel: NSObject
     var responseType: String?
     var responseDate: Date?
     var responseTime: String?
-    var responseHeaders: Dictionary<NSObject, AnyObject>?
+    var responseHeaders: Dictionary<NSObject, Any>?
     var responseBodyLength: Int?
     
     var timeInterval: Float?
@@ -71,8 +71,8 @@ class NFXHTTPModel: NSObject
         self.responseTime = getTimeFromDate(self.responseDate!)
         self.responseStatus = response.getNFXStatus()
         self.responseHeaders = response.getNFXHeaders()
-        
-        if let contentType = response.getNFXHeaders()["Content-Type"] as? String {
+
+        if let contentType = (responseHeaders as? [String: Any])?["Content-Type"] as? String {
             self.responseType = contentType.components(separatedBy: ";")[0]
             self.shortType = getShortTypeFrom(self.responseType!).rawValue as NSString
         }

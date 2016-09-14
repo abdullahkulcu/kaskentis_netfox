@@ -180,7 +180,7 @@ extension URLResponse
         return (self as? HTTPURLResponse)?.statusCode ?? 999
     }
     
-    public func getNFXHeaders() -> Dictionary<NSObject, AnyObject>
+    public func getNFXHeaders() -> Dictionary<NSObject, Any>
     {
         return (self as? HTTPURLResponse)?.allHeaderFields as [NSObject : AnyObject]? ?? Dictionary()
     }
@@ -253,7 +253,7 @@ class NFXDebugInfo {
     class func getNFXOSVersion() -> String
     {
         #if os(iOS)
-            return UIDevice.current().systemVersion ?? ""
+            return UIDevice.current.systemVersion 
         #elseif os(OSX)
             return ProcessInfo.processInfo.operatingSystemVersionString
         #endif
@@ -262,7 +262,7 @@ class NFXDebugInfo {
     class func getNFXDeviceType() -> String
     {
         #if os(iOS)
-            return UIDevice.getNFXDeviceType() ?? ""
+            return UIDevice.getNFXDeviceType() 
         #elseif os(OSX)
             return "Not implemented yet. PR welcomes"
         #endif
@@ -271,8 +271,8 @@ class NFXDebugInfo {
     class func getNFXDeviceScreenResolution() -> String
     {
         #if os(iOS)
-            let scale = UIScreen.main().scale
-            let bounds = UIScreen.main().bounds
+            let scale = UIScreen.main.scale
+            let bounds = UIScreen.main.bounds
             let width = bounds.size.width * scale
             let height = bounds.size.height * scale
             return "\(width) x \(height)"

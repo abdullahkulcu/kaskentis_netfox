@@ -27,8 +27,9 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
         tableView.register(NSNib(nibNamed: cellIdentifier, bundle: nil), forIdentifier: cellIdentifier)
         searchField.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(NFXListController.reloadTableViewData), name: "NFXReloadData" as NSNotification.Name, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(NFXListController_OSX.deactivateSearchController), name: "NFXDeactivateSearch" as NSNotification.Name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NFXListController.reloadTableViewData), name: NSNotification.Name(rawValue: "NFXReloadData"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NFXListController_OSX.deactivateSearchController), name: NSNotification.Name(rawValue: "NFXDeactivateSearch"
+        ), object: nil)
     }
     
     // MARK: Notifications
@@ -81,12 +82,12 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
         if (self.isSearchControllerActive) {
             if self.filteredTableData.count > 0 {
                 let obj = self.filteredTableData[row]
-                cell.configForObject(obj: obj)
+                cell.configForObject(obj)
             }
         } else {
             if NFXHTTPModelManager.sharedInstance.getModels().count > 0 {
                 let obj = NFXHTTPModelManager.sharedInstance.getModels()[row]
-                cell.configForObject(obj: obj)
+                cell.configForObject(obj)
             }
         }
         
@@ -110,7 +111,7 @@ class NFXListController_OSX: NFXListController, NSTableViewDelegate, NSTableView
         } else {
             model = NFXHTTPModelManager.sharedInstance.getModels()[self.tableView.selectedRow]
         }
-        self.delegate?.httpModelSelectedDidChange(model: model)
+        self.delegate?.httpModelSelectedDidChange(model)
     }
     
 }

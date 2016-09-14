@@ -36,7 +36,7 @@ class NFXSettingsController_iOS: NFXSettingsController, UITableViewDelegate, UIT
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.alwaysBounceVertical = false
-        self.tableView.backgroundColor = UIColor.clear()
+        self.tableView.backgroundColor = UIColor.clear
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.tableFooterView?.isHidden = true
         self.view.addSubview(self.tableView)
@@ -72,7 +72,7 @@ class NFXSettingsController_iOS: NFXSettingsController, UITableViewDelegate, UIT
     
     func nfxURLButtonPressed()
     {
-        UIApplication.shared().openURL(URL(string: nfxURL)!)
+        UIApplication.shared.openURL(URL(string: nfxURL)!)
     }
     
     func infoButtonPressed()
@@ -162,7 +162,7 @@ class NFXSettingsController_iOS: NFXSettingsController, UITableViewDelegate, UIT
             
             var filtersInfoLabel: UILabel
             filtersInfoLabel = UILabel(frame: headerView.bounds)
-            filtersInfoLabel.backgroundColor = UIColor.clear()
+            filtersInfoLabel.backgroundColor = UIColor.clear
             filtersInfoLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             filtersInfoLabel.font = UIFont.NFXFont(13)
             filtersInfoLabel.textColor = UIColor.NFXGray44Color()
@@ -213,7 +213,7 @@ class NFXSettingsController_iOS: NFXSettingsController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {        
-        let iPhone4s = (UIScreen.main().bounds.height == 480)
+        let iPhone4s = (UIScreen.main.bounds.height == 480)
         switch section {
         case 0:
             if iPhone4s {

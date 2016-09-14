@@ -20,7 +20,7 @@ open class NFX: NSObject
     #if os(OSX)
     var windowController: NFXWindowController?
     let mainMenu: NSMenu? = NSApp.mainMenu?.items[1].submenu
-    var nfxMenuItem: NSMenuItem = NSMenuItem(title: "netfox", action: #selector(NFX.show), keyEquivalent: String(character: NSF9FunctionKey, length: 1))
+    var nfxMenuItem: NSMenuItem = NSMenuItem(title: "netfox", action: #selector(NFX.show), keyEquivalent: String(describing: NSF9FunctionKey))
     #endif
     
     // swiftSharedInstance is not accessible from ObjC
@@ -225,7 +225,7 @@ open class NFX: NSObject
 
 extension NFX {
     
-    private func showNFXFollowingPlatform()
+    fileprivate func showNFXFollowingPlatform()
     {
         var navigationController: UINavigationController?
         
@@ -241,7 +241,7 @@ extension NFX {
         presentingViewController?.present(navigationController!, animated: true, completion: nil)
     }
     
-    private func hideNFXFollowingPlatform(_ completion: (() -> Void)?)
+    fileprivate func hideNFXFollowingPlatform(_ completion: (() -> Void)?)
     {
         presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             if let notNilCompletion = completion {
@@ -252,7 +252,7 @@ extension NFX {
     
     private var presentingViewController: UIViewController?
         {
-            let rootViewController = UIApplication.shared().keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             return rootViewController?.presentedViewController ?? rootViewController
     }
     
@@ -273,27 +273,27 @@ extension NFX {
         self.nfxMenuItem.keyEquivalentModifierMask = [NSEventModifierFlags(rawValue: NSEventModifierFlags.command.rawValue), NSEventModifierFlags(rawValue: NSEventModifierFlags.shift.rawValue)]
     }
     
-    private func addNetfoxToMainMenu() {
+    fileprivate func addNetfoxToMainMenu() {
         self.setupNetfoxMenuItem()
         if let menu = self.mainMenu {
             menu.insertItem(self.nfxMenuItem, at: 0)
         }
     }
     
-    private func removeNetfoxFromMainmenu() {
+    fileprivate func removeNetfoxFromMainmenu() {
         if let menu = self.mainMenu {
             menu.removeItem(self.nfxMenuItem)
         }
     }
     
-    private func showNFXFollowingPlatform()  {
+    fileprivate func showNFXFollowingPlatform()  {
         if self.windowController == nil {
             self.windowController = NFXWindowController(windowNibName: "NetfoxWindow")
         }
         self.windowController?.showWindow(nil)
     }
     
-    private func hideNFXFollowingPlatform(completion: (() -> Void)?)
+    fileprivate func hideNFXFollowingPlatform(completion: (() -> Void)?)
     {
         self.windowController?.close()
         if let notNilCompletion = completion {

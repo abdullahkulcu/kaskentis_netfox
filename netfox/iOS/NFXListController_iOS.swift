@@ -43,7 +43,7 @@ class NFXListController_iOS: NFXListController, UITableViewDelegate, UITableView
         searchView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 60, height: 0)
         searchView.autoresizingMask = [.flexibleWidth]
         searchView.autoresizesSubviews = true
-        searchView.backgroundColor = UIColor.clear()
+        searchView.backgroundColor = UIColor.clear
         
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchResultsUpdater = self
@@ -53,23 +53,23 @@ class NFXListController_iOS: NFXListController, UITableViewDelegate, UITableView
         searchView.addSubview(self.searchController.searchBar)
         self.searchController.searchBar.autoresizingMask = [.flexibleWidth]
         self.searchController.searchBar.sizeToFit()
-        self.searchController.searchBar.backgroundColor = UIColor.clear()
+        self.searchController.searchBar.backgroundColor = UIColor.clear
         self.searchController.searchBar.searchBarStyle = .minimal
         searchView.frame = self.searchController.searchBar.frame
-        self.searchController.view.backgroundColor = UIColor.clear()
+        self.searchController.view.backgroundColor = UIColor.clear
         
         self.navigationItem.titleView = searchView
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(NFXListController.reloadTableViewData),
-            name: "NFXReloadData" as NSNotification.Name,
+            name: NSNotification.Name(rawValue: "NFXReloadData"),
             object: nil)
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(NFXListController_iOS.deactivateSearchController),
-            name: "NFXDeactivateSearch" as NSNotification.Name,
+            name: NSNotification.Name(rawValue: "NFXDeactivateSearch"),
             object: nil)        
     }
     

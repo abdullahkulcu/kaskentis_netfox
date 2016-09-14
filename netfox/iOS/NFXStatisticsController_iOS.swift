@@ -26,7 +26,7 @@ class NFXStatisticsController_iOS: NFXStatisticsController {
         self.scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.scrollView.autoresizesSubviews = true
-        self.scrollView.backgroundColor = UIColor.clear()
+        self.scrollView.backgroundColor = UIColor.clear
         self.view.addSubview(self.scrollView)
         
         self.textLabel = UILabel()
@@ -43,7 +43,7 @@ class NFXStatisticsController_iOS: NFXStatisticsController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(NFXGenericController.reloadData),
-            name: "NFXReloadData" as NSNotification.Name,
+            name: NSNotification.Name(rawValue: "NFXReloadData"),
             object: nil)
         
     }

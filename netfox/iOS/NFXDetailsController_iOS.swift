@@ -66,14 +66,14 @@ class NFXDetailsController_iOS: NFXDetailsController, MFMailComposeViewControlle
         return tempButton
     }
     
-    func createDetailsView(_ content: AttributedString, forView: EDetailsView) -> UIScrollView
+    func createDetailsView(_ content: NSAttributedString, forView: EDetailsView) -> UIScrollView
     {
         var scrollView: UIScrollView
         scrollView = UIScrollView()
         scrollView.frame = CGRect(x: 0, y: 44, width: self.view.frame.width, height: self.view.frame.height - 44)
         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         scrollView.autoresizesSubviews = true
-        scrollView.backgroundColor = UIColor.clear()
+        scrollView.backgroundColor = UIColor.clear
         
         var textLabel: UILabel
         textLabel = UILabel()
@@ -89,13 +89,13 @@ class NFXDetailsController_iOS: NFXDetailsController, MFMailComposeViewControlle
         moreButton = UIButton.init(frame: CGRect(x: 20, y: textLabel.frame.maxY + 10, width: scrollView.frame.width - 40, height: 40))
         moreButton.backgroundColor = UIColor.NFXGray44Color()
         
-        if ((forView == EDetailsView.request) && (self.selectedModel.requestBodyLength > 1024)) {
+        if ((forView == EDetailsView.request) && (self.selectedModel.requestBodyLength! > 1024)) {
             moreButton.setTitle("Show request body", for: UIControlState())
             moreButton.addTarget(self, action: #selector(NFXDetailsController_iOS.requestBodyButtonPressed), for: .touchUpInside)
             scrollView.addSubview(moreButton)
             scrollView.contentSize = CGSize(width: textLabel.frame.width, height: moreButton.frame.maxY)
 
-        } else if ((forView == EDetailsView.response) && (self.selectedModel.responseBodyLength > 1024)) {
+        } else if ((forView == EDetailsView.response) && (self.selectedModel.responseBodyLength! > 1024)) {
             moreButton.setTitle("Show response body", for: UIControlState())
             moreButton.addTarget(self, action: #selector(NFXDetailsController_iOS.responseBodyButtonPressed), for: .touchUpInside)
             scrollView.addSubview(moreButton)
@@ -184,7 +184,7 @@ class NFXDetailsController_iOS: NFXDetailsController, MFMailComposeViewControlle
         
         var bodyDetailsController: NFXGenericBodyDetailsController
         
-        if self.selectedModel.shortType == HTTPModelShortType.IMAGE.rawValue {
+        if self.selectedModel.shortType as String == HTTPModelShortType.IMAGE.rawValue {
             bodyDetailsController = NFXImageBodyDetailsController()
         } else {
             bodyDetailsController = NFXRawBodyDetailsController()
@@ -235,7 +235,7 @@ class NFXDetailsController_iOS: NFXDetailsController, MFMailComposeViewControlle
         }
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?)
     {
         self.dismiss(animated: true, completion: nil)
     }

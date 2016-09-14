@@ -11,7 +11,7 @@ import UIKit
 
 extension UIWindow
 {
-    override public func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?)
+    override open func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?)
     {
         if NFX.sharedInstance().getSelectedGesture() == .shake {
             if (event!.type == .motion && event!.subtype == .motionShake) {
@@ -37,7 +37,7 @@ public extension UIDevice
         
         for child in mirror.children {
             if let value = child.value as? Int8, value != 0 {
-                identifier.append(UnicodeScalar(UInt8(value)))
+                identifier.append(String(value))
             }
         }
         

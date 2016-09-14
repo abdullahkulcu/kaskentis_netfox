@@ -29,7 +29,7 @@ class NFXListCell: UITableViewCell
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor.clear()
+        backgroundColor = UIColor.clear
         selectionStyle = .none
         
 
@@ -38,7 +38,7 @@ class NFXListCell: UITableViewCell
         
         self.requestTimeLabel = UILabel(frame: CGRect.zero)
         self.requestTimeLabel.textAlignment = .center
-        self.requestTimeLabel.textColor = UIColor.white()
+        self.requestTimeLabel.textColor = UIColor.white
         self.requestTimeLabel.font = UIFont.NFXFontBold(13)
         contentView.addSubview(self.requestTimeLabel)
         
@@ -71,7 +71,7 @@ class NFXListCell: UITableViewCell
         contentView.addSubview(self.circleView)
         
         self.leftSeparator = UIView(frame: CGRect.zero)
-        self.leftSeparator.backgroundColor = UIColor.white()
+        self.leftSeparator.backgroundColor = UIColor.white
         contentView.addSubview(self.leftSeparator)
         
         self.rightSeparator = UIView(frame: CGRect.zero)
@@ -138,7 +138,7 @@ class NFXListCell: UITableViewCell
     {
         if status == 999 {
             self.statusView.backgroundColor = UIColor.NFXGray44Color() //gray
-            self.timeIntervalLabel.textColor = UIColor.white()
+            self.timeIntervalLabel.textColor = UIColor.white
 
         } else if status < 400 {
             self.statusView.backgroundColor = UIColor.NFXGreenColor() //green
